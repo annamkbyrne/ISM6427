@@ -137,4 +137,26 @@ document.addEventListener("click", (e) => {
   if (!e.target.closest(".search")) results.hidden = true;
 });
 
+// Greeting based on the time of day
+const USER_NAME = "Précindy";
+const hourNow = new Date().getHours();
+const partOfDay = hourNow < 12 ? "morning" : hourNow < 17 ? "afternoon" : "evening";
+$("greeting").textContent = `Good ${partOfDay}, ${USER_NAME}`;
+
+// Theme switcher: light, dark, or follow the system
+const themeButtons = document.querySelectorAll("[data-theme-choice]");
+
+function applyTheme(choice) {
+  if (choice === "system") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = choice;
+  themeButtons.forEach((b) => b.setAttribute("aria-pressed", b.dataset.themeChoice === choice));
+  try { localStorage.setItem("theme", choice); } catch {}
+}
+
+themeButtons.forEach((b) => b.addEventListener("click", () => applyTheme(b.dataset.themeChoice)));
+
+let savedTheme = "system";
+try { savedTheme = localStorage.getItem("theme") || "system"; } catch {}
+applyTheme(savedTheme);
+
 loadWeather(DEFAULT_PLACE);

@@ -7,6 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply the saved theme before the page paints to avoid a flash
+    try {
+      const t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch {}
+  </script>
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -16,6 +23,15 @@
   </div>
 
   <main class="app">
+    <header class="top">
+      <h1 class="greeting" id="greeting">Hello, Précindy</h1>
+      <div class="theme glass" role="group" aria-label="Theme">
+        <button type="button" data-theme-choice="light">☀️ Light</button>
+        <button type="button" data-theme-choice="dark">🌙 Dark</button>
+        <button type="button" data-theme-choice="system">💻 System</button>
+      </div>
+    </header>
+
     <form class="search glass" id="search-form" autocomplete="off">
       <input id="search-input" type="search" placeholder="Search for a city" aria-label="Search for a city">
       <ul class="results glass" id="results" hidden></ul>
